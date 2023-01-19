@@ -4,12 +4,11 @@
 
 <div class = "container">
   <h2>Manage Accounts</h2>
-  <hr />
-  <br>
-  
+    <hr>
+
   @if (User.Identity.IsAuthenticated)
   {
-    <p>Hello @User.Identity.Name</p>
+    <div>Hello @User.Identity.Name</div>
     @using (Html.BeginForm("LogOff", "Account"))
     {
       <input type="submit" class="btn-success" value="Log out" />
@@ -17,9 +16,9 @@
   }
   else
   {
-    <p>@Html.ActionLink("Register", "Register")</p>
-    <p>@Html.ActionLink("Log in", "Login")</p>
+    <div>@Html.ActionLink("Register Account", "Register")</div>
+    <div>@Html.ActionLink("Log in", "Login")</div>
   }
-  <br>
-  <p>@Html.ActionLink("Home", "Index", "Home")</p>
+  <hr>
+  <div>@Html.ActionLink("Home", "Index", "Home")</div>
 </div>
