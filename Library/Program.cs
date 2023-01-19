@@ -20,7 +20,7 @@ namespace Library
         ServerVersion.AutoDetect(builder.Configuration["ConnectionStrings:DefaultConnection"])));
 
         builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
-                        .AddEntityFrameworkStores<FactoryContext>()
+                        .AddEntityFrameworkStores<LibraryContext>()
                         .AddDefaultTokenProviders();
 
         WebApplication app = builder.Build();
