@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
 using System.Linq;
 using Library.Models;
 
@@ -69,7 +70,7 @@ namespace Library.Controllers
     public async Task<IActionResult> Update(string id)
     {
       IdentityRole role = await roleManager.FindByIdAsync(id);
-      List<AppUser> members = new List<ApplicationUser>();
+      List<ApplicationUser> members = new List<ApplicationUser>();
       List<ApplicationUser> nonMembers = new List<ApplicationUser>();
       foreach (ApplicationUser user in userManager.Users)
       {
@@ -95,7 +96,7 @@ namespace Library.Controllers
           ApplicationUser user = await userManager.FindByIdAsync(userId);
           if (user != null)
           {
-            result = await userManager.RemoveFromRoleAsync(user, model.RoleName);
+            result = await userManager.RemoveFromRoleAsync(user, model.RoleNme);
             if (!result.Succeeded)
             Errors(result);
           }
