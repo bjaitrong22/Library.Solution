@@ -10,6 +10,6 @@ namespace Library.Models
   {
     public IdentityRole Role { get; set; }
     public IEnumerable<ApplicationUser> Members { get; set; }
-    public IEnumerable<ApplicationUser> Nonmembers { get; set; }
+    public IEnumerable<ApplicationUser> NonMembers { get; set; }
   }
 }
