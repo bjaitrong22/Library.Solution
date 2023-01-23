@@ -6,7 +6,7 @@ namespace Library.Models
   public class RoleModification
   {
     [Required]
-    public string RoleNme { get; set; }
+    public string RoleName { get; set; }
     public string RoleId { get; set; }
 
     #nullable enable
