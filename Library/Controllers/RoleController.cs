@@ -72,18 +72,20 @@ namespace Library.Controllers
       IdentityRole role = await roleManager.FindByIdAsync(id);
       List<ApplicationUser> members = new List<ApplicationUser>();
       List<ApplicationUser> nonMembers = new List<ApplicationUser>();
-      foreach (ApplicationUser user in userManager.Users)
+
+      foreach (ApplicationUser user in userManager.Users.ToList())
       {
         var list = await userManager.IsInRoleAsync(user, role.Name) ? members : nonMembers;
         list.Add(user);
       }
+      
       return View(new RoleEdit
       {
         Role = role,
         Members = members,
-        Nonmembers = nonMembers
+        NonMembers = nonMembers
       });
-    }
+    }  
 
     [HttpPost]
     public async Task<IActionResult> Update(RoleModification model)
@@ -96,16 +98,27 @@ namespace Library.Controllers
           ApplicationUser user = await userManager.FindByIdAsync(userId);
           if (user != null)
           {
-            result = await userManager.RemoveFromRoleAsync(user, model.RoleNme);
+            result = await userManager.AddToRoleAsync(user, model.RoleName);
             if (!result.Succeeded)
-            Errors(result);
+                Errors(result);
+            }
+        }
+
+        foreach (string userId in model.DeleteIds ?? new string[] { })
+        {
+          ApplicationUser user = await userManager.FindByIdAsync(userId);
+          if (user != null)
+          {
+            result = await userManager.RemoveFromRoleAsync(user, model.RoleName);
+            if (!result.Succeeded)
+              Errors(result);
           }
         }
       }
       if (ModelState.IsValid)
-      return RedirectToAction(nameof(Index));
+        return RedirectToAction(nameof(Index));
       else
-      return await Update(model.RoleId);
+        return await Update(model.RoleId);
     }
   }
 }
