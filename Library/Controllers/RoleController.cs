@@ -16,12 +16,12 @@ namespace Library.Controllers
   {
     private RoleManager<IdentityRole> roleManager;
     private UserManager<ApplicationUser> userManager;
-    public RoleController(RoleManager<IdentityRole> roleMgr, UserManager<ApplicationUser> userMrg)
+    public RoleController(RoleManager<IdentityRole> roleMgr, UserManager<ApplicationUser> userMgr)
     {
       roleManager = roleMgr;
-      userManager = userMrg; 
+      userManager = userMgr; 
     }
-    public ViewResult Index() => View(roleManager.Roles);
+    public ViewResult Index() => View(roleManager.Roles.ToList());
 
     private void Errors(IdentityResult result)
     {
