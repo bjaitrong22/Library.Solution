@@ -50,6 +50,15 @@ namespace Library.Controllers
         return RedirectToAction("Index");
       }
     }
-  }
 
+    public ActionResult Details(int id)
+    {
+        Catalog thisCatalog = _db.Catalogs
+                              .Include(cat => cat.Books)
+                              .ThenInclude(book => book.JoinEntities)
+                              .FirstOrDefault(catalog => catalog.CatalogId == id);
+
+        return View(thisCatalog);
+    }
+  }
 }
