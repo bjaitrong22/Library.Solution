@@ -31,5 +31,32 @@ namespace Library.Controllers
 
       return View(books);
     }
+
+    [Authorize]
+    public ActionResult Create()
+    {
+      ViewBag.CatalogId = new SelectList(_db.Catalogs, "CatalogId", "LibraryName");
+      return View();
+
+    }
+
+    [HttpPost]
+    public async Task<ActionResult> Create(Book book, int CatalogId)
+    {
+      if (!ModelState.IsValid)
+      {
+        ViewBag.CatalogId = new SelectList(_db.Catalogs, "CatalogId", "LibraryName");
+        return View(book);
+      }
+      else
+      {
+        string userId= User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        ApplicationUser currentUser = await _userManager.FindByIdAsync(userId);
+        book.User = currentUser;
+        _db.Books.Add(book);
+        _db.SaveChanges();
+        return RedirectToAction("Index");
+      }
+    }
   }
 }
