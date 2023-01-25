@@ -3,9 +3,13 @@
 @using Library.Models;
 
 <div class = "container">
-<h1>Welcome to the Library catalog</h1>
+<h1>Welcome to the Lone Tree Public Library</h1>
   <hr>
     <p>@Html.ActionLink("Log in", "Login", "Account")</p>
     <p>@Html.ActionLink("Create or manage an account", "Index", "Account")</p>
+    <p>@Html.ActionLink("Manage Library Catalogs", "Index", "Catalogs")</p>
     <p>@Html.ActionLink("Manage all Books", "Index", "Books")</p>
+
+        <p>@Html.ActionLink("Manage Roles", "Index", "Role")</p>
+
     </div>
