@@ -1,0 +1,23 @@
+@{
+  Layout ="_Layout";
+}
+
+@model Library.Models.Catalog
+
+<div class="container">
+  <h2>Edit</h2>
+
+  <h4>Edit @Html.DisplayFor(model => model.LibraryName)'s catalog</h4>
+
+  @using (Html.BeginForm())
+  {
+    @Html.HiddenFor(model => model.CatalogId)
+
+    @Html.LabelFor(model => Model.LibraryName)
+    @Html.EditorFor(model => model.LibraryName)
+
+    <input type="submit" value="save" class="btn btn-primary" />
+  }
+  <br>
+  <p>@Html.ActionLink("Manage Library Catalogs", "Index")</p>
+</div>

@@ -1,0 +1,21 @@
+@{
+    Layout ="_Layout";
+}
+
+@model Library.Models.Catalog
+
+<div class="containger">
+  <h4>Add a new library catalog</h4>
+
+  <p>@Html.ValidationMessageFor(model => model.LibraryName," ", new { @class = "text-danger", @style = "font-weight: 600;"})</p>
+  
+  @using (Html.BeginForm())
+  {
+    @Html.LabelFor(model => model.LibraryName, " Library Name: ")
+    @Html.TextBoxFor(model => model.LibraryName)
+
+    <input type="submit" value="Add new library Catalog" class="btn btn-primary" />
+  }
+  <br>
+  <p>@Html.ActionLink("Manage Library Catalogs", "Index")</p>
+</div>

@@ -60,5 +60,31 @@ namespace Library.Controllers
 
         return View(thisCatalog);
     }
+
+    [Authorize]
+    public ActionResult Edit(int id)
+    {
+      Catalog thisCatalog = _db.Catalogs.FirstOrDefault(catalog => catalog.CatalogId == id);
+
+      return View(thisCatalog);
+    }
+
+    [HttpPost]
+    public async Task <ActionResult> Edit(Catalog catalog)
+    {
+      if (!ModelState.IsValid)
+      {
+        return View(catalog);
+      }
+      else
+      {
+        string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        ApplicationUser currentUser = await _userManager.FindByIdAsync(userId);
+        _db.Catalogs.Update(catalog);
+        _db.SaveChanges();
+
+        return RedirectToAction("Index");
+      }
+    }
   }
 }
