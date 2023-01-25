@@ -86,5 +86,26 @@ namespace Library.Controllers
         return RedirectToAction("Index");
       }
     }
+
+    [Authorize]
+    public ActionResult Delete(int id)
+    {
+      Catalog thisCatalog = _db.Catalogs.FirstOrDefault(catalog => catalog.CatalogId == id);
+
+      return View(thisCatalog);
+    }
+
+    [HttpPost, ActionName("Delete")]
+    public async Task<ActionResult> DeleteConfirmed(int id)
+    {
+      string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+      ApplicationUser currentUser = await _userManager.FindByIdAsync(userId);
+      
+      Catalog thisCatalog = _db.Catalogs.FirstOrDefault(catalog => catalog.CatalogId == id);
+      _db.Catalogs.Remove(thisCatalog);
+      _db.SaveChanges();
+
+      return RedirectToAction("Index");  
+    }
   }
 }
