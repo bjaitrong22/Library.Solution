@@ -1,0 +1,28 @@
+@{
+  Layout ="_Layout";
+}
+
+@model Library.Models.Book
+
+<div class="container">
+  <h2>Eidt</h2>
+  <hr />
+  <br>
+  <h4>Edit this book: @Html.DisplayFor(model => model.Title)</h4>
+  <p>@Html.ValidationMessageFor(model => model.Title,"", new{@class = "text-danger", @style = "font-weight: 600;"})</p>
+
+  @using (Html.BeginForm())
+  {
+    @Html.HiddenFor(model => model.BookId)
+
+    @Html.LabelFor(model => model.Title)
+    @Html.EditorFor(model => model.Title)
+
+    @Html.LabelFor(model => model.Catalog)
+    @Html.DropDownList("CatalogId")
+
+    <input type="submit" value="Save" class="btn btn-primary" />
+  }
+  <br>
+  <p>@Html.ActionLink("Manage Books", "Index")</p>
+</div>

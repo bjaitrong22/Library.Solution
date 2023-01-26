@@ -68,5 +68,35 @@ namespace Library.Controllers
                       .FirstOrDefault(book => book.BookId == id);
       return View(thisBook);                
     }
+
+    [Authorize]
+    public ActionResult Edit(int id)
+    {
+      Book thisBook = _db.Books.FirstOrDefault(book => book.BookId == id);
+      ViewBag.CatalogId = new SelectList(_db.Catalogs, "CatalogId", "LibraryName");
+
+      return View(thisBook);
+    }
+
+    [HttpPost]
+    public async Task<ActionResult> Edit(Book book)
+    {
+      if(!ModelState.IsValid)
+      {
+        ViewBag.CatalogId = new SelectList(_db.Catalogs, "CatalogId", "LibraryName");
+
+        return View(book);
+      }
+      else
+      {
+        string userId= User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        ApplicationUser currentUser = await _userManager.FindByIdAsync(userId);
+        book.User = currentUser;
+        _db.Books.Update(book);
+        _db.SaveChanges();
+
+        return RedirectToAction("Index");
+      }
+    }
   }
 }
