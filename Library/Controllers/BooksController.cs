@@ -58,5 +58,15 @@ namespace Library.Controllers
         return RedirectToAction("Index");
       }
     }
+    
+    public ActionResult Details(int id)
+    {
+      Book thisBook = _db.Books
+                      .Include(book => book.Catalog)
+                      .Include(book => book.JoinEntities)
+                      .ThenInclude( join => join.Author)
+                      .FirstOrDefault(book => book.BookId == id);
+      return View(thisBook);                
+    }
   }
 }
